@@ -40,7 +40,6 @@ const getFiles = async (globPattern) => {
     nodir: true,
     nonull: true,
   })
-  console.dir(files, { colors: true })
   return files
 }
 
