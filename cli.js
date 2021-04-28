@@ -1,20 +1,20 @@
 #!/usr/bin/env node
 
 const fs = require("fs/promises")
-const fg = require("fast-glob")
+const glob = require("glob")
 const meow = require("meow")
 const { check } = require("@makenowjust-labo/recheck")
 
 const cli = meow(
   `
 	Usage
-	  $ recheck [arguments] <dir glob>
+	  $ recheck [arguments] "<dir glob>"
 
 		-n 	include node_modules (default: false)
 	  
 	Examples
-	  $ recheck **/*.js
-	  $ recheck -n **/*.js
+	  $ recheck "**/*.js"
+	  $ recheck -n "**/*.js"
 `,
   {
     flags: {
@@ -26,21 +26,22 @@ const cli = meow(
   }
 )
 
-const [glob] = cli.input
+const [globPattern] = cli.input
 const flags = cli.flags
 
-if (!glob && process.stdin.isTTY) {
+if (!globPattern && process.stdin.isTTY) {
   console.error("Path is required")
   process.exit(1)
 }
 
-const getFiles = async (glob) => {
-  return await fg([glob], {
-    unique: true,
-    globstar: true,
-    onlyFiles: true,
-    ignore: !flags.nodeModules ? ["node_modules"] : [],
+const getFiles = async (globPattern) => {
+  const files = glob.sync(globPattern, {
+    nosort: true,
+    nodir: true,
+    nonull: true,
   })
+  console.dir(files, { colors: true })
+  return files
 }
 
 const loopFiles = async (files) => {
@@ -51,6 +52,7 @@ const loopFiles = async (files) => {
   Promise.all(files.map((file) => parseRegexes(file))).then((data) => {
     const entries = Object.entries(data[0])
     entries.forEach((entry) => {
+      // entry[0] is file name, entry[1] is array of line matches
       console.log(entry[0])
       console.log(`  Unsafe Regex`)
       entry[1].forEach((line) => {
@@ -72,7 +74,7 @@ const parseRegexes = async (file) => {
   return fileLines.reduce((obj, line, index) => {
     if (re.test(line)) {
       const checkResult = check(line.trim(), "")
-      if (checkResult.status !== "safe") {
+      if (checkResult.status !== "safe" && checkResult.status !== "unknown") {
         if (!obj[file]) {
           obj[file] = []
         }
@@ -97,7 +99,6 @@ recheck results:
 --- 
 `)
 
-  const files = await getFiles(glob)
-  console.log(files.length)
+  const files = await getFiles(globPattern)
   await loopFiles(files)
 })()
