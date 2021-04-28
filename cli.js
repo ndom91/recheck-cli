@@ -1,6 +1,6 @@
 #!/usr/bin/env node
-
 const fs = require("fs/promises")
+const ora = require("ora")
 const glob = require("glob")
 const meow = require("meow")
 const { check } = require("@makenowjust-labo/recheck")
@@ -39,16 +39,25 @@ const getFiles = async (globPattern) => {
     nosort: true,
     nodir: true,
     nonull: true,
+    ignore: [
+      "node_modules",
+      "**/node_modules/**",
+      "**/node_modules",
+      "./node_modules",
+      "./node_modules/**",
+      "node_modules/**",
+    ],
   })
   return files
 }
 
-const loopFiles = async (files) => {
+const loopFiles = async (files, spinner) => {
   if (!Array.isArray(files)) {
     throw Error("No Files Found")
   }
 
   Promise.all(files.map((file) => parseRegexes(file))).then((data) => {
+    spinner.succeed()
     const entries = Object.entries(data[0])
     entries.forEach((entry) => {
       // entry[0] is file name, entry[1] is array of line matches
@@ -65,6 +74,7 @@ const loopFiles = async (files) => {
 const parseRegexes = async (file) => {
   const fileContents = await fs.readFile(file, "utf8")
   const fileLines = fileContents.split("\n")
+  console.log(file)
 
   const re = new RegExp(
     /\/((?![*+?])(?:[^\r\n\[/\\]|\\.|\[(?:[^\r\n\]\\]|\\.)*\])+)\/((?:g(?:im?|mi?)?|i(?:gm?|mg?)?|m(?:gi?|ig?)?)?)/
@@ -72,7 +82,13 @@ const parseRegexes = async (file) => {
 
   return fileLines.reduce((obj, line, index) => {
     if (re.test(line)) {
-      const checkResult = check(line.trim(), "")
+      const foundRegex = line.match(re)
+      console.log(foundRegex[0])
+      const checkResult = check(foundRegex[0], "", {
+        timeout: 1000,
+        checker: "hybrid",
+      })
+      console.log(checkResult)
       if (checkResult.status !== "safe" && checkResult.status !== "unknown") {
         if (!obj[file]) {
           obj[file] = []
@@ -99,5 +115,7 @@ recheck results:
 `)
 
   const files = await getFiles(globPattern)
-  await loopFiles(files)
+  const spinner = ora(`Checking ${files.length} files...`).start()
+  console.log()
+  await loopFiles(files, spinner)
 })()
