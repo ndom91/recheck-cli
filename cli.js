@@ -1,20 +1,20 @@
 #!/usr/bin/env node
 const fs = require("fs/promises")
-const ora = require("ora")
 const glob = require("glob")
 const meow = require("meow")
 const { check } = require("@makenowjust-labo/recheck")
 
 const cli = meow(
   `
-	Usage
-	  $ recheck [arguments] "<dir glob>"
+  Usage
+    $ recheck [arguments] "<dir glob>"
 
-		-n 	include node_modules (default: false)
-	  
-	Examples
-	  $ recheck "**/*.js"
-	  $ recheck -n "**/*.js"
+  Flags
+    -n 	include node_modules (default: false)
+
+  Examples
+    $ recheck "**/*.js"
+    $ recheck -n "**/*.js"
 `,
   {
     flags: {
@@ -35,46 +35,47 @@ if (!globPattern && process.stdin.isTTY) {
 }
 
 const getFiles = async (globPattern) => {
+  const ignoreNodeModules = [
+    "node_modules",
+    "**/node_modules/**",
+    "**/node_modules",
+    "./node_modules",
+    "./node_modules/**",
+    "node_modules/**",
+  ]
   const files = glob.sync(globPattern, {
     nosort: true,
     nodir: true,
     nonull: true,
-    ignore: [
-      "node_modules",
-      "**/node_modules/**",
-      "**/node_modules",
-      "./node_modules",
-      "./node_modules/**",
-      "node_modules/**",
-    ],
+    ignore: !flags.nodeModules && ignoreNodeModules,
   })
   return files
 }
 
-const loopFiles = async (files, spinner) => {
+const loopFiles = async (files) => {
   if (!Array.isArray(files)) {
     throw Error("No Files Found")
   }
 
   Promise.all(files.map((file) => parseRegexes(file))).then((data) => {
-    spinner.succeed()
-    const entries = Object.entries(data[0])
-    entries.forEach((entry) => {
-      // entry[0] is file name, entry[1] is array of line matches
-      console.log(entry[0])
-      console.log(`  Unsafe Regex`)
-      entry[1].forEach((line) => {
-        console.log(`    - (L${line.lineNr}) ${line.line}`)
-        console.log(`      - Summary: ${line.summary}`)
+    data
+      .filter((item) => Object.getOwnPropertyNames(item).length !== 0)
+      .forEach((entry) => {
+        const target = Object.entries(entry).flat()
+        console.log()
+        console.log(`File: ${target[0]}`)
+        console.log(`  Unsafe Regex`)
+        target[1].forEach((line) => {
+          console.log(`    - (L${line.lineNr}) ${line.line}`)
+          console.log(`      - Summary: ${line.summary}`)
+        })
       })
-    })
   })
 }
 
 const parseRegexes = async (file) => {
   const fileContents = await fs.readFile(file, "utf8")
   const fileLines = fileContents.split("\n")
-  console.log(file)
 
   const re = new RegExp(
     /\/((?![*+?])(?:[^\r\n\[/\\]|\\.|\[(?:[^\r\n\]\\]|\\.)*\])+)\/((?:g(?:im?|mi?)?|i(?:gm?|mg?)?|m(?:gi?|ig?)?)?)/
@@ -83,12 +84,10 @@ const parseRegexes = async (file) => {
   return fileLines.reduce((obj, line, index) => {
     if (re.test(line)) {
       const foundRegex = line.match(re)
-      console.log(foundRegex[0])
-      const checkResult = check(foundRegex[0], "", {
+      const checkResult = check(foundRegex[0].slice(1, -1), "", {
         timeout: 1000,
         checker: "hybrid",
       })
-      console.log(checkResult)
       if (checkResult.status !== "safe" && checkResult.status !== "unknown") {
         if (!obj[file]) {
           obj[file] = []
@@ -115,7 +114,7 @@ recheck results:
 `)
 
   const files = await getFiles(globPattern)
-  const spinner = ora(`Checking ${files.length} files...`).start()
+  console.log(`Checking ${files.length} files...`)
   console.log()
-  await loopFiles(files, spinner)
+  await loopFiles(files)
 })()
