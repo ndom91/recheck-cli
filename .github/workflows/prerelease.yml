@@ -17,5 +17,7 @@ jobs:
         with:
           prerelease: true
           files: dist/*
+          name: ${{ github.ref }}
+          tag_name: ${{ github.ref }}
         env:
           GITHUB_TOKEN: ${{ secrets.RELEASE_TOKEN }}
