@@ -1,5 +1,8 @@
-name: Release Package
-on: [push]
+name: Release NPM Tagged Package
+on:
+  push:
+    tags:
+      - "v*"
 jobs:
   release:
     runs-on: ubuntu-latest
@@ -10,12 +13,13 @@ jobs:
           node-version: "14.x"
           registry-url: "https://registry.npmjs.org"
       - run: npm install
-      - run: npm publish
+      - run: npm publish --access public
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_AUTH_TOKEN }}
       - uses: actions/setup-node@v2
         with:
           registry-url: "https://npm.pkg.github.com"
+      - run: npm run build
       - run: npm publish
         env:
           NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}

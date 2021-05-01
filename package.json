@@ -1,12 +1,12 @@
 {
   "name": "recheck-cli",
-  "version": "0.0.4",
+  "version": "0.1.0",
   "description": "ReDos CLI Checker",
   "main": "cli.js",
   "bin": "cli.js",
   "scripts": {
     "start": "node cli.js",
-    "build": "pkg"
+    "build": "pkg ."
   },
   "keywords": [
     "redos",
