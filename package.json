@@ -3,26 +3,36 @@
   "version": "0.0.4",
   "description": "ReDos CLI Checker",
   "main": "cli.js",
+  "bin": "cli.js",
   "scripts": {
-    "start": "node cli.js"
+    "start": "node cli.js",
+    "build": "pkg"
   },
   "keywords": [
     "redos",
     "regex",
     "checker"
   ],
+  "pkg": {
+    "targets": [
+      "node14-linux-x64",
+      "node14-win-x64",
+      "node14-macos-x64"
+    ],
+    "outputPath": "dist"
+  },
   "author": "Nico Domino <yo@ndo.dev>",
   "license": "MIT",
   "dependencies": {
     "@makenowjust-labo/recheck": "^3.0.0",
     "glob": "^7.1.6",
-    "meow": "^9.0.0",
-    "ora": "^5.4.0"
+    "meow": "^9.0.0"
   },
   "devDependencies": {
     "eslint": "^7.25.0",
     "eslint-config-prettier": "^8.3.0",
     "eslint-plugin-prettier": "^3.4.0",
+    "pkg": "^5.1.0",
     "prettier": "^2.2.1"
   },
   "prettier": {
