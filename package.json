@@ -8,6 +8,10 @@
     "start": "node cli.js",
     "build": "pkg ."
   },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/ndom91/recheck-cli.git"
+  },
   "keywords": [
     "redos",
     "regex",
