@@ -12,13 +12,21 @@ Here we scan use the [ReCheck](https://github.com/MakeNowJust-Labo/recheck) java
 
 ## 🖨️ Usage
 
-Just pass a path glob as the first argument, and it will scan all matching files for regexes and subsequently run those through the recheck redos checker.
+In general, you just pass a path glob as the first argument, and it will scan all matching files for regexes and subsequently run those regexes through the redos checker, printing all matching vulnerable regexes at the end.
+
+We have statically linked binaries for MacOS, Windows and Linux available in the `Releases` here on Github, just download them and run them on the commandline like so:
 
 ```bash
-recheck "**/*.js"
+./recheck-cli-linux "src/**/*.js"
 ```
 
-Or you can include `node_modules` by passing the `-n` flag before the glob pattern.
+This package is also published on npm, so you can run it with `npx` without having to manually install it first.
+
+```bash
+npx recheck-cli "**/*.js"
+```
+
+You can include the `node_modules` directories (ignored by default) by passing the `-n` flag before the glob pattern.
 
 Example Output:
 
