@@ -11,13 +11,16 @@ jobs:
     runs-on: "ubuntu-latest"
     steps:
       - uses: actions/checkout@v2
+      - name: get-npm-version
+        id: package-version
+        uses: martinbeentjes/npm-get-version-action@master
       - run: npm install
       - run: npm run build
       - uses: softprops/action-gh-release@v1
         with:
           prerelease: true
           files: dist/*
-          name: ${{ github.ref }}
-          tag_name: ${{ github.ref }}
+          name: recheck-cli-${{ steps.package-version.outputs.current-version}}
+          tag_name: ${{ steps.package-version.outputs.current-version}}
         env:
           GITHUB_TOKEN: ${{ secrets.RELEASE_TOKEN }}
