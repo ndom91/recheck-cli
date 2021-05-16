@@ -9,6 +9,11 @@ The [MakeNowJust-Labo/recheck](https://github.com/MakeNowJust-Labo/recheck) ReDo
 
 Just pass it a path glob and let it do the checking!
 
+
+<p align="center">
+    <img src="https://user-images.githubusercontent.com/7415984/118409060-f066ab80-b688-11eb-9a01-efe358ee7ed1.gif" alt="Screen recording of using the CLI.">
+</p>
+
 ## 📑 Summary
 
 This is a little CLI used to find Regex Denial-of-Service ([ReDos](https://en.wikipedia.org/wiki/ReDoS)) problems in your code. This can happen when a regular expression is built in a way where the time it takes to run it grows exponentially when certain input strings are used, causing the aforementioned denial-of-service.
@@ -63,6 +68,18 @@ File: functions/src/browser-check-common/src/Uploader.js
 
 Open to all PRs
 
-## 📝 License
 
-MIT
+<p align="center">
+    <sub>
+        Project by ndom91, released under <a href="https://github.com/ndom91/recheck-cli/blob/main/LICENSE">MIT license</a>.
+    </sub>
+</p>
+<p align="center">
+    <a href="https://twitter.com/ndom91">
+        <img alt="Nico Domino on Twitter" src="https://raw.githubusercontent.com/leodr/fill-packagejson/main/assets/twitter.svg">
+    </a>
+    &nbsp;&nbsp;
+    <a href="https://github.com/ndom91">
+        <img alt="Nico Domino on GitHub" src="https://raw.githubusercontent.com/leodr/fill-packagejson/main/assets/github.svg">
+    </a>
+</p>
