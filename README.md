@@ -10,7 +10,7 @@ The [MakeNowJust-Labo/recheck](https://github.com/MakeNowJust-Labo/recheck) ReDo
 Just pass it a path glob and let it do the checking!
 
 
-<p align="center">
+<p align="left">
     <img src="https://user-images.githubusercontent.com/7415984/118409060-f066ab80-b688-11eb-9a01-efe358ee7ed1.gif" alt="Screen recording of using the CLI.">
 </p>
 
