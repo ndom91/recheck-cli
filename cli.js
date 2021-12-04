@@ -2,7 +2,7 @@
 const fs = require("fs/promises")
 const glob = require("glob")
 const meow = require("meow")
-const { check } = require("@makenowjust-labo/recheck")
+const { checkSync } = require("recheck")
 
 const cli = meow(
   `
@@ -84,7 +84,7 @@ const parseRegexes = async (file) => {
   return fileLines.reduce((obj, line, index) => {
     if (re.test(line)) {
       const foundRegex = line.match(re)
-      const checkResult = check(foundRegex[0].slice(1, -1), "", {
+      const checkResult = checkSync(foundRegex[0].slice(1, -1), "", {
         timeout: 1000,
         checker: "hybrid",
       })
