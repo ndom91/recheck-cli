@@ -5,7 +5,7 @@
 ![GitHub code size in bytes](https://img.shields.io/github/languages/code-size/ndom91/recheck-cli?label=size&style=flat-square)
 ![GitHub](https://img.shields.io/github/license/ndom91/recheck-cli?style=flat-square)
 
-The [MakeNowJust-Labo/recheck](https://github.com/MakeNowJust-Labo/recheck) ReDoc checker in CLI form.
+The [MakeNowJust-Labo/recheck](https://github.com/MakeNowJust-Labo/recheck) ReDoS checker in CLI form.
 
 Just pass it a path glob and let it do the checking!
 
