@@ -11,8 +11,8 @@ jobs:
         with:
           node-version: "24"
           registry-url: "https://registry.npmjs.org"
-      - run: npm install
-      - run: npm publish --access public
+      - run: pnpm install
+      - run: pnpm publish --access public
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_AUTH_TOKEN }}
       - uses: actions/setup-node@v5
@@ -20,7 +20,7 @@ jobs:
           node-version: "24"
           registry-url: "https://npm.pkg.github.com"
           scope: "@ndom91"
-      - run: npm run build
-      - run: npm publish
+      - run: pnpm build
+      - run: pnpm publish
         env:
           NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}

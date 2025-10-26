@@ -14,8 +14,8 @@ jobs:
       - name: get-npm-version
         id: package-version
         uses: martinbeentjes/npm-get-version-action@master
-      - run: npm install
-      - run: npm run build
+      - run: pnpm install
+      - run: pnpm build
       - uses: softprops/action-gh-release@v2
         with:
           files: dist/*
