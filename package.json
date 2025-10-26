@@ -8,6 +8,7 @@
   "scripts": {
     "dev": "tsx src/cli.ts",
     "build": "tsup",
+    "prepublish": "pnpm check && pnpm build",
     "test": "node --import tsx --test src/**/*.test.ts",
     "test:watch": "node --import tsx --test --watch src/**/*.test.ts",
     "format": "biome format --write src/",
