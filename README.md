@@ -1,7 +1,6 @@
 # ⌨️ Recheck CLI
 
 ![GitHub package.json version](https://img.shields.io/github/package-json/v/ndom91/recheck-cli?style=flat-square)
-![GitHub Workflow Status](https://img.shields.io/github/workflow/status/ndom91/recheck-cli/Release%20Github%20Dev%20Package?style=flat-square)
 ![GitHub code size in bytes](https://img.shields.io/github/languages/code-size/ndom91/recheck-cli?label=size&style=flat-square)
 ![GitHub](https://img.shields.io/github/license/ndom91/recheck-cli?style=flat-square)
 
