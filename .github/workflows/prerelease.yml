@@ -21,5 +21,3 @@ jobs:
           files: dist/*
           name: recheck-cli-${{ steps.package-version.outputs.current-version}}
           tag_name: ${{ steps.package-version.outputs.current-version}}
-        env:
-          GITHUB_TOKEN: ${{ secrets.RELEASE_TOKEN }}
