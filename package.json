@@ -1,6 +1,6 @@
 {
   "name": "recheck-cli",
-  "version": "0.3.0",
+  "version": "0.3.1",
   "description": "ReDos CLI Checker",
   "type": "module",
   "main": "dist/cli.js",
