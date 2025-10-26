@@ -14,6 +14,9 @@ jobs:
       - name: get-npm-version
         id: package-version
         uses: martinbeentjes/npm-get-version-action@master
+      - uses: pnpm/action-setup@v4
+        with:
+          version: 10
       - run: pnpm install
       - run: pnpm build
       - uses: softprops/action-gh-release@v2
