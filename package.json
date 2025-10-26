@@ -1,12 +1,15 @@
 {
   "name": "recheck-cli",
-  "version": "0.2.2",
+  "version": "0.3.0",
   "description": "ReDos CLI Checker",
-  "main": "cli.js",
-  "bin": "cli.js",
+  "type": "module",
+  "main": "dist/cli.js",
+  "bin": "dist/cli.js",
   "scripts": {
-    "start": "node cli.js",
-    "build": "pkg ."
+    "dev": "tsx src/cli.ts",
+    "build": "tsup",
+    "test": "node --import tsx --test src/**/*.test.ts",
+    "test:watch": "node --import tsx --test --watch src/**/*.test.ts"
   },
   "repository": {
     "type": "git",
@@ -28,16 +31,20 @@
   "author": "Nico Domino <yo@ndo.dev>",
   "license": "MIT",
   "dependencies": {
-    "recheck": "^4.1.1",
-    "glob": "^7.1.6",
-    "meow": "^9.0.0"
+    "glob": "^11.0.3",
+    "meow": "^14.0.0",
+    "recheck": "^4.5.0",
+    "tsup": "^8.5.0",
+    "tsx": "^4.20.6",
+    "typescript": "^5.9.3"
   },
   "devDependencies": {
-    "eslint": "^7.25.0",
-    "eslint-config-prettier": "^8.3.0",
-    "eslint-plugin-prettier": "^3.4.0",
-    "pkg": "^5.1.0",
-    "prettier": "^2.2.1"
+    "@types/node": "^24.9.1",
+    "eslint": "^9.38.0",
+    "eslint-config-prettier": "^10.1.8",
+    "eslint-plugin-prettier": "^5.5.4",
+    "pkg": "^5.8.1",
+    "prettier": "^3.6.2"
   },
   "prettier": {
     "semi": false
