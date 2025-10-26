@@ -1,8 +1,8 @@
 # ⌨️ Recheck CLI
 
-![GitHub package.json version](https://img.shields.io/github/package-json/v/ndom91/recheck-cli?style=flat-square)
-![GitHub code size in bytes](https://img.shields.io/github/languages/code-size/ndom91/recheck-cli?label=size&style=flat-square)
-![GitHub](https://img.shields.io/github/license/ndom91/recheck-cli?style=flat-square)
+Version](https://img.shields.io/npm/v/recheck-cli?style=flat-square)](https://www.npmjs.com/package/recheck-cli)
+[![GitHub code size in bytes](https://img.shields.io/github/languages/code-size/ndom91/recheck-cli?label=size&style=flat-square)](https://github.com/ndom91/recheck-cli)
+[![GitHub](https://img.shields.io/github/license/ndom91/recheck-cli?style=flat-square)](https://github.com/ndom91/recheck-cli)
 
 The [MakeNowJust-Labo/recheck](https://github.com/MakeNowJust-Labo/recheck) ReDoS checker in CLI form.
 
